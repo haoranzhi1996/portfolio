@@ -567,16 +567,34 @@ const updateScrollWidth = () => {
 const images = document.querySelectorAll('.scroll-container img');
 images.forEach(img => {
     img.addEventListener('load', () => {
-       // updateScrollWidth();
+       updateScrollWidth();
     });
 });
 
-// Initial calculation when the DOM is ready
+// Wait for all images to load before updating scroll width
+const waitForImagesToLoad = () => {
+    const imageLoadPromises = Array.from(images).map(img => {
+        return new Promise(resolve => {
+            if (img.complete) {
+                resolve(); // Image already loaded
+            } else {
+                img.addEventListener('load', resolve);
+                img.addEventListener('error', resolve); // Handle errors gracefully
+            }
+        });
+    });
+
+    return Promise.all(imageLoadPromises);
+};
+
+// Initial calculation when all images are loaded
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM fully loaded and parsed");
-    updateScrollWidth();
+    waitForImagesToLoad().then(() => {
+        console.log("All images loaded");
+        updateScrollWidth();
+    });
 });
- 
 
         
     </script>
