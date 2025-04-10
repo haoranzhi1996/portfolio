@@ -523,8 +523,6 @@
    
 
 
-
-
     <script>
 
 gsap.registerPlugin(ScrollTrigger);
@@ -569,7 +567,6 @@ const updateScrollWidth = () => {
 const images = document.querySelectorAll('.scroll-container img');
 images.forEach(img => {
     img.addEventListener('load', () => {
-        console.log("Image loaded, updating scroll width...")
         updateScrollWidth();
     });
 });
@@ -580,6 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateScrollWidth();
 });
  
+
         
     </script>
 </body>
