@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <title>Haoran Zhi</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        body {
+            height: 300vh;
+            overflow-x: auto;
+            margin: 0;
+            background-color: rgb(255, 255, 255);
+
+        }
+
+        html {
+            height: 300vh;
+            margin: 0;
+            overflow-x: auto;
+
+        }
+
+        .scroll-container {
+            position: fixed;
+            top: 68px;
+            left: 0px;
+            width: max-content;
+            display: flex;
+            gap: 10px;
+            transform: translateY(0);
+            overflow-x: auto; /* Allows horizontal scrolling */
+            min-width: fit-content;
+            will-change: transform;
+            scroll-behavior: smooth;
+
+
+
+        }
+
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Aligns the caption to the left edge of the image */
+            text-align: left;
+            max-width: 100%;
+            padding-right: 0;
+            padding-top: 0;
+            margin: 0px;
+            position: relative;
+
+        }
+
+        .image {
+            height: 80vh;
+            width: auto;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .caption {
+            font-size: 10px;
+            font-family: "Baskerville", serif;
+            color: rgb(0, 0, 0);
+            margin-top: 0px;
+            margin-right: 100px;
+            width: 400px; /* Allow it to go beyond the image width */
+            word-wrap: break-word;
+            line-height: 1.2;
+            letter-spacing: 1.2px; /* Adjust the spacing between letters */
+            text-align: left;
+            text-transform: uppercase; 
+        }
+
+
+        .line1 {
+            font-family: "Baskerville", serif;
+            letter-spacing: 0.85px;
+        }
+
+        .line2 {
+            font-family: "Baskerville", serif;
+            display: block;
+            width: 100%;
+            text-align: justify;
+        }
+        
+        a.underline {
+            text-decoration: none; /* Remove default underline */
+            color: black;
+            position: relative;
+            display: inline-block; /* Ensures it wraps properly */
+
+        }
+
+        a.underline::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; /* Adjust to shift the underline down */
+            left: 0;
+            width: 100%;
+            height: 1px; /* Thickness of the underline */
+            background-color: black;
+        }
+
+    
+
+        /* Keep text overlay (Haoran Zhi) the same */
+        .text-overlay1 {
+            font-family: 'Open Sans', Arial, sans-serif;
+            position: fixed;
+            top: 15px;
+            left: 48px;
+            font-size: 18px;
+            font-weight: normal;
+            line-height: 1.2;
+            letter-spacing: 0px; /* Adjust the spacing between letters */
+            color: rgb(0, 0, 0);
+            transition: color 0.05s ease;
+            text-decoration: none;
+            z-index: 1001; /* Above the overlay */
+            
+        }
+        
+
+        .text-overlay2 {
+            font-family: 'Open Sans', Arial, sans-serif;
+            position: fixed;
+            top: 15px;
+            right: 58px;
+            font-size: 18px;
+            font-weight: normal;
+            line-height: 1.2;
+            letter-spacing: 0px; /* Adjust the spacing between letters */
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            z-index: 1001; /* Above the overlay */
+            text-align: right;
+        }
+        
+        
+        .text-overlay3 {
+            display: none;
+            
+        }
+        .overlay {
+         display: none; /* Hide on desktop */
+        }
+        .overlay img {
+            display: none; /* Hide on desktop */
+        }  
+
+        
+
+        @media screen and (max-width: 768px) {
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Prevent scrolling */
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgb(255, 255, 255); /* Optional: Set a background color behind the overlay */
+    }
+
+    /* Full-screen overlay */
+    .overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgb(255, 255, 255); /* Adjust color as needed */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1002;
+    }
+
+    .overlay img {
+        display: block;
+        position: fixed;
+        width: 80vw;
+        top: 200px;
+        height: auto;
+        max-height: 80vh;
+    }
+
+    
+    .text-overlay3 {
+            display: block;
+            font-family: 'Open Sans', Arial, sans-serif;
+            position: fixed;
+            top: 15px;
+            left: 38px;
+            max-width: 300px;
+            font-size: 18px;
+            font-weight: normal;
+            line-height: 1.2;
+            letter-spacing: 0px; /* Adjust the spacing between letters */
+            color: rgb(0, 0, 0);
+            transition: color 0.05s ease;
+            text-decoration: none;
+            z-index: 1003; /* Above the overlay */
+            
+        }
+
+    /* Hide everything else */
+    .scroll-container, 
+    .image-container,
+    .caption
+    .text-overlay, 
+    .text-overlay2 {
+        display: none;
+        overflow-x: hidden;
+    }
+}
+
+            
+    
+    </style>
+</head>
+<body>
+    <div class="scroll-container">
+        
+            <div class="image-container">
+                <img src="forgetfulangel-gradshow-1.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="forgetfulangel-1.jpg" alt="Test Image 1" class="image">
+            </div>
+            <p class="caption">
+                <span class="line1">Forgetful Angel<br>Film shown at Gerrit Rietveld Academie gradution show. <br>Watch <a href="https://vimeo.com/983069345/512f81299e?share=copy" target="_blank" class="underline">here</a>.</span><br><br>
+                <span class="line2">07.2024</span>
+            </p>
+
+            <div class="image-container">
+                <img src="rietveldcampaign-web.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="rietveldcampaign-poster.jpg" alt="Test Image 1" class="image">
+            </div>
+            <p class="caption">
+                <span class="line1">Identity for Gerrit Rietveld Academie Graduation Show, <br>with <a href="https://www.instagram.com/anna_reymond_/" target="_blank" class="underline">Anna Reymond</a>.</span><br><br>
+                <span class="line2">07.2024</span>
+            </p>
+
+            <div class="image-container">
+                <img src="artandresearch-1.jpg" alt="Test Image 2" class="image">
+            </div>
+            <div class="image-container">
+                <img src="artandresearch-2.jpg" alt="Test Image 2" class="image">
+            </div>
+            <div class="image-container">
+                <img src="artandresearch-3.jpg" alt="Test Image 3" class="image">
+            </div>
+            <div class="image-container">
+                <img src="artandresearch-4.jpg" alt="Test Image 2" class="image">
+            </div>
+            <div class="image-container">
+                <img src="artandresearch-opened1.jpg" alt="Test Image 2" class="image">
+            </div>
+            <div class="image-container">
+                <img src="artandesearch-poster.jpg" alt="Test Image 3" class="image">
+            </div>
+            <p class="caption">               
+                <span class="line1">i wanna split up.<br>publication and poster design for <a href="https://www.extraintra.nl/initiatives/art-and-research/art-and-research-programme-2023-2024/?fbclid=PAZXh0bgNhZW0CMTEAAaZVf0j-POc_zeiJtyAE1AcDemPNLn-bED4N1YVWX0IeoOooreHOG2cC-T8_aem_LduJz_-mew2ZXn1jmqHvWQ" target="_blank" class="underline">Art & Research Programme</a>.</span><br><br>
+                <span class="line2">05.2024</span>
+            </p>
+
+            <div class="image-container">
+                <img src="fivefilmstills-01.jpg" alt="Test Image 3" class="image">
+            </div>  
+            <div class="image-container">
+                <img src="fivefilmstills-02.jpg" alt="Test Image 2" class="image">
+            </div>                                         
+            <div class="image-container">
+                <img src="fivefilmstills-front.jpg" alt="Test Image 2" class="image">
+            </div>   
+            <div class="image-container">
+                <img src="fivefilmstills-03.jpg" alt="Test Image 2" class="image">
+            </div>                            
+            <p class="caption">               
+                <span class="line1">Five film stills from Run, Spindle<br>publication design for Tobias Niemeyer’s film “Run, Spindle.” </span><br><br>
+                <span class="line2">05.2024</span>
+            </p>
+
+            <div class="image-container">
+                <img src="dinnerwithlove.png" alt="Test Image 1" class="image">
+            </div>
+            <p class="caption">
+                <span class="line1">Invitation campaign for Dinner with Love, with <a href="https://www.instagram.com/geewonchoi/" target="_blank" class="underline">Jiwon Choi</a>. Video documentation <a href="https://vimeo.com/907781768/e64f3006aa?share=copy" target="_blank" class="underline">here</a>.</span><br><br>
+                <span class="line2">11.2023</span>
+            </p>
+
+            <div class="image-container">
+                <img src="princesscharmingbagcampaign-01.jpg" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="princesscharmingbagcampaign-anna.jpg" alt="Test Image 1" class="image">
+            </div>
+            
+            <p class="caption">
+                <span class="line1">Poster Campaign in a fake magazine for Princess Charming Straw bag, with <a href="https://www.instagram.com/anna_reymond_/" target="_blank" class="underline">Anna Reymond</a>.</span><br><br>
+                <span class="line2">06.2023</span>
+            </p>
+
+            <div class="image-container">
+                <img src="fetish-01.png" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="fetish-02.png" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="fetish-03.png" alt="Test Image 1" class="image">
+            </div>
+            
+            
+            <p class="caption">
+                <span class="line1">Fetish<br>Lyric Video for “Fetish”, from album “Soused” by Scott Walker & sunn O))), with Elsa Baslé.	Watch <a href="https://vimeo.com/853481694?turnstile=0.579rUJRHJu4WmlIvWzkzgGusKbpflERzoumacUyvo7ItOVeeejCVgVzLX1GmoJaPY5Lf8_scZt5jnOH3Gk3IA9pNTQ2Kj9HNh1kVHEcBXtJIAnc2a-wyIGQfZWGUXNm3G7K4jc1sP43moUjQ_qaMgXe6eP7ATCmJGn58a5SgodxR4mg-KnszoRIKQHXTef93bA48laXh76YzoR_EU-luzD5fExHGU9ZlbNJBEjZOR0Rn0hKlGRjjYGSomm9fBGo2ACS-dpOcEzURaC9w_kgjWY7SKSW5W9ABWX_ua0XqfcpsxrI_7EGzpjnzYr31b5BdNMPxxXzb9u4E7kw3YB1bXYzix6_GweofdwQU94vEr-IoVfjyvfmMqN8MYJABISW9PjdWexq5syF6fZh5n9lrcSlmebGrWqXhc7Xhy3Z_vtN1CdVNtbFAhrvIFhTYHTnLdJFs5UqtyegGMH_TktnfB1AOpa2GK6hNlNpF8ZMniDkKQRikP5zw29SPU7aAqt_G5xVY_jeRPmrMjEZlOnPTh0ghriZwMegDzeBp8O1Q-NGvbSAQvAW_zJVhDBCop1Rq0PwxnIJeJDRpg3Slm7WWwGDicL19Z2xIVxXd7PoDCIuYkMoWaUgBhq875ECKlN1kqThD5SkTL0psAXp9yMcRA9LNobd10_bzYEQDBZBLFCUZu8q5WQHQ3-CzW1tdiH8qoDy-uHP8M6O1ukrHpfj7UviUWtanqE5Uyhuu6j9vNukOrV1WgQYu6DtwbItjC2zH0kGIeC16pboUeIlSiM7adygUIknMGSWGF6RfIlAXfUUlK7ZJ1FcI_OepApQRsjdHG1Vws_DcF5LjnEB4HI7a7Q.7t8wgNQd4xV0Rbi3koOpjg.f7d246178c44c773634a82554ec35a721b87f5ac0c8e68cbd9926244ac899b1d" target="_blank" class="underline">here</a>.</span><br><br>
+                <span class="line2">06.2023</span>
+            </p>
+
+
+            <div class="image-container">
+                <img src="imagehopscotch-1.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="imagehopscotch-2.jpg" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="imagehopscotch-3.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="imagehopscotch-5.jpg" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="imagehopscotch-4.jpg" alt="Test Image 1" class="image">
+            </div>
+            <p class="caption">
+                <span class="line1">Image Hopscotch</span><br><br>
+                <span class="line2">06.2023</span>
+            </p>
+
+            <div class="image-container">
+                <img src="teacocktailparty-cups.JPG" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="teacocktailparty1.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="teacocktailparty2.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="teacocktailparty3.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="teacocktailparty4.jpg" alt="Test Image 1" class="image">
+            </div>
+        
+            <p class="caption">
+                <span class="line1">Poster for Tea Cocktail Party initiated by Wenzhu Song, funded by Gerrit Rietveld Academie Student Council.</span><br><br>
+                <span class="line2">05.2023</span>
+            </p>
+
+            <div class="image-container">
+                <img src="cyberfeminism-poster.jpg" alt="Test Image 1" class="image">
+            </div>
+            <p class="caption">
+                <span class="line1">Poster for Mindy Seu’s lecture on designing the CYBERFEMINISM INDEX, with Jiwon Choi and Anna Reymond. </span><br><br>
+                <span class="line2">02.2023</span>
+            </p>
+
+        
+
+
+            <div class="image-container">
+                <img src="untouchable1.png" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="untouchable5.png" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="untouchable7.png" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="untouchable4.png" alt="Test Image 1" class="image">
+            </div>
+            <p class="caption">
+                <span class="line1">Untouchable<br>Title sequence made for a film synopsis written by <br>Jiwon Choi. Watch <a href="https://vimeo.com/784045212?fbclid=PAZXh0bgNhZW0CMTEAAaZxLgAtx09pYvE9NLyA_N6c8BSXHu4_T-Yw92ayWz5VQhnPW6Zf30ZPvko_aem_PuWAbT0D_NW4Aq7vQ1Jagg" target="_blank" class="underline">here</a>.</span><br><br>
+                <span class="line2">12.2022</span>
+            </p>
+
+            <div class="image-container">
+                <img src="meditationsfromthevoid-front.jpg" alt="Test Image 1" class="image">
+            </div>
+    
+            
+            <div class="image-container">
+                <img src="meditationsfromthevoid4.jpg" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="meditationsfromthevoid6.jpg" alt="Test Image 1" class="image">
+            </div>
+           
+            <div class="image-container">
+                <img src="meditationsfromthevoid8.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="meditationsfromthevoid11.jpg" alt="Test Image 1" class="image">
+            </div>
+            
+            <p class="caption">
+                <span class="line1">meditations from the void<br>Thesis design for Tobias Mud, Image and Language department at Gerrit Rietveld Academie.</span><br><br>
+                <span class="line2">07.2022</span>
+            </p>
+
+            <div class="image-container">
+                <img src="cookbook-cover.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="cookbook1.JPG" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="cookbook2.JPG" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="cookbook5.JPG" alt="Test Image 1" class="image">
+            </div>
+            <p class="caption">
+                <span class="line1">Publication with image intervention on Siemens magnetron recipe book.</span><br><br>
+                <span class="line2">02.2022</span>
+            </p>
+
+            <div class="image-container">
+                <img src="mythologyreader-print.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="mythologyreader-1.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="mythologyreader-3.jpg" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="mythologyreader-5.jpg" alt="Test Image 1" class="image">
+            </div>
+            <p class="caption">
+                <span class="line1">Publication with image intervention on “New Larousse Encyclopedia of Mythology.”</span><br><br>
+                <span class="line2">02.2022</span>
+            </p>
+
+            
+            <div class="image-container">
+                <img src="essayposters-long2.jpg" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="essayposters-long5.jpg" alt="Test Image 1" class="image">
+            </div><div class="image-container">
+
+                <img src="essayposter1.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="essayposter6.jpg" alt="Test Image 1" class="image">
+            </div>
+            
+            <div class="image-container">
+                <img src="essayposter5.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="essayposter7.jpg" alt="Test Image 1" class="image">
+            </div>
+            <div class="image-container">
+                <img src="essayposter9.jpg" alt="Test Image 1" class="image">
+            </div>
+            
+            <p class="caption">
+                <span class="line1">Essay Posters</span><br><br>
+                <span class="line2">02.2021</span>
+            </p>
+
+    </div>
+
+    <div class="text-overlay1">
+        Ｈａｏｒａｎ　Ｚｈｉ　
+        
+    </div>
+    <div class="text-overlay2">
+        <a href="mailto:haoran.zhizhizhi@gmail.com" style="color: black; text-decoration: none;">Ｍａｉｌ</a>　　＋３１　６２２１４１１５６　　Ａｍｓｔｅｒｄａｍ　ＮＬ　
+    </div>
+
+
+
+    <div class="overlay img">
+        <img src="forgetfulangel-gradshow-phone.jpg" alt="Test Image 1" class="image">
+    </div>
+
+    <div class="text-overlay3">
+        <p style="font-size: 11pt;">Ｐｌｅａｓｅ　ｖｉｓｉｔ　ｍｅ　ｏｎ　<br>ａ　ｄｅｓｋｔｏｐ　：）　<br><br><br>Ｈａｏｒａｎ　Ｚｈｉ　<br><a href="mailto:haoran.zhizhizhi@gmail.com" style="color: black; text-decoration: none;"><u>Ｍａｉｌ</u></a><br>＋３１　６２２１４１１５６　　<br>Ａｍｓｔｅｒｄａｍ　ＮＬ　
+        </p>
+    </div>
+
+    
+    
+   
+</div>
+   
+
+
+
+
+    <script>
+
+gsap.registerPlugin(ScrollTrigger);
+
+const container = document.querySelector('.scroll-container');
+const lastElement = container.lastElementChild;
+
+// Function to calculate the scroll width based on the window size
+const updateScrollWidth = () => {
+    console.log("Updating scroll width...");
+    const windowWidth = window.innerWidth;
+    const extraPadding = 6500;
+
+    // Calculate the total scrollable width based on the last element
+    const totalWidth = lastElement.offsetLeft + lastElement.offsetWidth - windowWidth + extraPadding;
+
+    // If the total width is too small, prevent scrolling past the content
+    if (totalWidth < 0) {
+        gsap.to(".scroll-container", {
+            x: 0,
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+    } else {
+        gsap.to(".scroll-container", {
+            x: `-${totalWidth}px`,
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+    }
+};
+
+// Recalculate scroll width when an image loads
+const images = document.querySelectorAll('.scroll-container img');
+images.forEach(img => {
+    img.addEventListener('load', () => {
+        console.log("Image loaded, updating scroll width...")
+        updateScrollWidth();
+    });
+});
+
+// Initial calculation when the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM fully loaded and parsed");
+    updateScrollWidth();
+});
+ 
+        
+    </script>
+</body>
+</html>
