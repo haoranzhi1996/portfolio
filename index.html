@@ -13,7 +13,7 @@
     <style>
 
         :root {
-            --header-left: 48px;
+            --header-left: 60px;
         }
 
         /* =========================
@@ -34,6 +34,7 @@
             padding: 0;
             background-color: rgb(255, 255, 255);
             overflow-x: hidden;
+            overscroll-behavior-x: none;
         }
 
 
@@ -57,6 +58,7 @@
 
             overflow-x: auto;
             overflow-y: hidden;
+            overscroll-behavior-x: none;
 
             scroll-snap-align: start;
             scroll-snap-stop: always;
@@ -213,7 +215,7 @@
         ========================= */
 
         .text-overlay1 {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Avenir Next', Avenir, sans-serif;
             position: fixed;
             top: 15px;
             left: var(--header-left);
@@ -225,7 +227,7 @@
             transition: color 0.05s ease;
             text-decoration: none;
             display: inline;
-            z-index: 1001;
+            z-index: 1200;
             cursor: pointer;
         }
 
@@ -253,7 +255,7 @@
         ========================= */
 
         .text-overlay2 {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Avenir Next', Avenir, sans-serif;
             position: fixed;
             top: 15px;
             right: 58px;
@@ -297,32 +299,16 @@
             overflow: hidden;
         }
 
-        .bio-close {
-            position: absolute;
-            top: 17px;
-            left: calc(var(--header-left) + 4px);
-            border: 0;
-            padding: 0;
-            background: none;
-            color: inherit;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 16px;
-            font-weight: normal;
-            line-height: 1;
-            cursor: pointer;
-        }
-
-        .bio-close:focus {
-            outline: none;
-        }
-
         .bio-content {
             position: absolute;
             top: 68px;
-            left: calc(var(--header-left) + 4px);
-            max-width: 600px;
+            left: var(--header-left);
+            max-width: 3000px;
             margin-top: 0;
             padding-left: 0;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            column-gap: 100px;
             font-family: "Baskerville", serif;
             font-size: 10px;
             line-height: 1.2;
@@ -332,6 +318,11 @@
 
         .bio-content p {
             margin: 0 0 24px;
+        }
+
+        .bio-details {
+            grid-column: 2;
+            grid-row: 1 / span 2;
         }
 
         .bio-content a {
@@ -400,7 +391,7 @@
 
             .text-overlay3 {
                 display: block;
-                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Avenir Next', Avenir, sans-serif;
                 position: fixed;
                 top: 15px;
                 left: 50%;
@@ -446,9 +437,25 @@
     </div>
 
     <div class="bio-panel" id="bioPanel" aria-hidden="true">
-        <button class="bio-close" id="bioClose" type="button" aria-label="Close bio">✕</button>
         <div class="bio-content">
-            <p>Haoran Zhi is a graphic designer<br>working across all types of printed & could-have-been-printed matter<br></p>
+            <p>is a graphic designer <br> working across printed & could-have-been-printed matter<br></p>  
+            </p>
+            <div class="bio-details">
+                <p> Selected Commisioners:<br>
+                    Filmhuis Cavia<br>
+                    Beaux-Arts de Paris<br>
+                    Gerrit Rietveld Academie<br>
+                    Rietveld TV<br>
+                    Universiteit van Amsterdam<br>
+                    Ignacio Pintó<br>
+                    Marcus Wärnheim<br>
+                    Sophie Thomas<br>
+                </p>
+                <p>Studies:<br>
+                    BA Graphic Design, Gerrit Rietveld Academie, NL<br>
+                    BA ENglish Literature, Binghamtonton University, US
+                </p>
+            </div>
         </div>
     </div>
 
@@ -1218,7 +1225,6 @@
 
         const bioButton = document.querySelector('.text-overlay1');
         const bioPanel = document.querySelector('#bioPanel');
-        const bioClose = document.querySelector('#bioClose');
         let lockedScrollPosition = 0;
 
         const positionMobileImage = () => {
@@ -1244,7 +1250,6 @@
             document.body.classList.add('bio-open');
             bioPanel.classList.add('is-open');
             bioPanel.setAttribute('aria-hidden', 'false');
-            bioClose.focus();
         };
 
         const closeBio = () => {
@@ -1256,8 +1261,16 @@
             bioButton.focus();
         };
 
-        bioButton.addEventListener('click', openBio);
-        bioClose.addEventListener('click', closeBio);
+        bioButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+
+            if (bioPanel.classList.contains('is-open')) {
+                closeBio();
+            } else {
+                openBio();
+            }
+        });
+
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape' && bioPanel.classList.contains('is-open')) {
                 closeBio();
