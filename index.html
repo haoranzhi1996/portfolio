@@ -398,7 +398,8 @@
                 font-family: 'Open Sans', Arial, sans-serif;
                 position: fixed;
                 top: 15px;
-                left: 38px;
+                left: 50%;
+                transform: translateX(-50%);
                 max-width: 300px;
                 width: calc(100vw - 76px);
                 font-size: 18px;
@@ -1174,8 +1175,6 @@
                 const textBounds = mobileText.getBoundingClientRect();
 
                 mobileImage.style.width = `${textBounds.width}px`;
-                mobileImage.style.left = `${textBounds.left}px`;
-                mobileImage.style.transform = 'none';
                 mobileImage.style.top = `${textBounds.bottom + 20}px`;
             }
         };
