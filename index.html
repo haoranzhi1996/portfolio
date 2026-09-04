@@ -385,10 +385,12 @@
             .overlay img {
                 display: block;
                 position: fixed;
-                width: 80vw;
-                top: 200px;
+                width: 300px;
+                max-width: calc(100vw - 76px);
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
                 height: auto;
-                max-height: 80vh;
             }
 
             .text-overlay3 {
@@ -398,6 +400,7 @@
                 top: 15px;
                 left: 38px;
                 max-width: 300px;
+                width: calc(100vw - 76px);
                 font-size: 18px;
                 font-weight: normal;
                 line-height: 1.2;
@@ -1162,6 +1165,23 @@
         const bioPanel = document.querySelector('#bioPanel');
         const bioClose = document.querySelector('#bioClose');
         let lockedScrollPosition = 0;
+
+        const positionMobileImage = () => {
+            const mobileText = document.querySelector('.text-overlay3 p');
+            const mobileImage = document.querySelector('.overlay img');
+
+            if (mobileText && mobileImage && window.innerWidth <= 768) {
+                const textBounds = mobileText.getBoundingClientRect();
+
+                mobileImage.style.width = `${textBounds.width}px`;
+                mobileImage.style.left = `${textBounds.left}px`;
+                mobileImage.style.transform = 'none';
+                mobileImage.style.top = `${textBounds.bottom + 20}px`;
+            }
+        };
+
+        positionMobileImage();
+        window.addEventListener('resize', positionMobileImage);
 
         const openBio = () => {
             lockedScrollPosition = window.scrollY;
