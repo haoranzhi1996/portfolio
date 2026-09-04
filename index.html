@@ -398,8 +398,7 @@
                 font-family: 'Open Sans', Arial, sans-serif;
                 position: fixed;
                 top: 15px;
-                left: 50%;
-                transform: translateX(-50%);
+                left: 38px;
                 max-width: 300px;
                 width: calc(100vw - 76px);
                 font-size: 18px;
@@ -457,7 +456,7 @@
     </div>
 
     <div class="text-overlay3">
-        <p style="font-size: 11pt;">Ｈａｏｒａｎ　Ｚｈｉ　<br>Ｇｒａｐｈｉｃ　Ｄｅｓｉｇｎｅｒ<br><br>ｐｒｉｎｔｅｄ　＆　ｃｏｕｌｄ－ｈａｖｅ－ｂｅｅｎ－ｐｒｉｎｔｅｄ　ｍａｔｔｅｒ　<br><br><a href="mailto:haoran.zhizhizhi@gmail.com" class="mail-link">Ｍａｉｌ</a><br>＋３１　６２２１４１１５６　　<br>Ａｍｓｔｅｒｄａｍ　ＮＬ　
+        <p style="font-size: 11pt;">Ｈａｏｒａｎ　Ｚｈｉ　<br>Ｇｒａｐｈｉｃ　Ｄｅｓｉｇｎｅｒ<br><br><a href="mailto:haoran.zhizhizhi@gmail.com" class="mail-link">Ｍａｉｌ</a><br>＋３１　６２２１４１１５６　　<br>Ａｍｓｔｅｒｄａｍ　ＮＬ　
         </p>
     </div>
 
@@ -1172,10 +1171,7 @@
             const mobileImage = document.querySelector('.overlay img');
 
             if (mobileText && mobileImage && window.innerWidth <= 768) {
-                const textBounds = mobileText.getBoundingClientRect();
-
-                mobileImage.style.width = `${textBounds.width}px`;
-                mobileImage.style.top = `${textBounds.bottom + 20}px`;
+                mobileImage.style.top = `${mobileText.getBoundingClientRect().bottom + 20}px`;
             }
         };
 
